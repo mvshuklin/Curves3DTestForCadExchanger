@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1340
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CE_TEST_APP", "CE_TEST_APP.vcxproj", "{80EEC439-0D9D-4659-9555-05B9AD48D376}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A507B75E-55BA-496E-BD26-81500339E79F} = {A507B75E-55BA-496E-BD26-81500339E79F}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CeGeometry", "CeGeometry\CeGeometry.vcxproj", "{A507B75E-55BA-496E-BD26-81500339E79F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{80EEC439-0D9D-4659-9555-05B9AD48D376}.Debug|x64.ActiveCfg = Debug|x64
+		{80EEC439-0D9D-4659-9555-05B9AD48D376}.Debug|x64.Build.0 = Debug|x64
+		{80EEC439-0D9D-4659-9555-05B9AD48D376}.Release|x64.ActiveCfg = Release|x64
+		{80EEC439-0D9D-4659-9555-05B9AD48D376}.Release|x64.Build.0 = Release|x64
+		{A507B75E-55BA-496E-BD26-81500339E79F}.Debug|x64.ActiveCfg = Debug|x64
+		{A507B75E-55BA-496E-BD26-81500339E79F}.Debug|x64.Build.0 = Debug|x64
+		{A507B75E-55BA-496E-BD26-81500339E79F}.Release|x64.ActiveCfg = Release|x64
+		{A507B75E-55BA-496E-BD26-81500339E79F}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EA1501C8-3072-44BF-9F41-E63A89F1B6DF}
+	EndGlobalSection
+EndGlobal
