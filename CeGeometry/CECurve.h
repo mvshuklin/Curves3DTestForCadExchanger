@@ -1,17 +1,17 @@
 //************************************************
 //************************************************
-// Решение тестовой задачи от CAD Exchanger
-//            Библиотека кривых
+// Р РµС€РµРЅРёРµ С‚РµСЃС‚РѕРІРѕР№ Р·Р°РґР°С‡Рё РѕС‚ CAD Exchanger
+//            Р‘РёР±Р»РёРѕС‚РµРєР° РєСЂРёРІС‹С…
 //                CECurve.h
 //************************************************
 //************************************************
-//             СОДЕРЖАНИЕ:
-// CePoint - Точка
-// CeVector - Вектор
-// CeCurve - Кривая
-// CeCircle - Окружность
-// CeEllipse - Эллипс
-// CeHelix - Спираль
+//             РЎРћР”Р•Р Р–РђРќРР•:
+// CePoint - РўРѕС‡РєР°
+// CeVector - Р’РµРєС‚РѕСЂ
+// CeCurve - РљСЂРёРІР°СЏ
+// CeCircle - РћРєСЂСѓР¶РЅРѕСЃС‚СЊ
+// CeEllipse - Р­Р»Р»РёРїСЃ
+// CeHelix - РЎРїРёСЂР°Р»СЊ
 //************************************************
 //************************************************
 #ifndef CECURVE_H
@@ -28,7 +28,7 @@
 namespace CadExchangerTestSpace {
 
 //************************************************
-// CePoint - Точка
+// CePoint - РўРѕС‡РєР°
 //************************************************
 struct DLLIMPEXP CePoint {
   double x, y, z;
@@ -38,12 +38,12 @@ struct DLLIMPEXP CePoint {
   CePoint(double xx, double yy, double zz) : x(xx), y(yy), z(zz){ }
   CePoint(const CePoint& pt1, const CePoint& pt2) : x((pt1.x+pt2.x)/2.), y((pt1.y+pt2.y)/2.), z((pt1.z+pt2.z)/2.){ } // Mid
   
-  // Расстояние между точками
+  // Р Р°СЃСЃС‚РѕСЏРЅРёРµ РјРµР¶РґСѓ С‚РѕС‡РєР°РјРё
   double distTo(const CePoint& other) const;
 };
 
 //************************************************
-// CeVector - Вектор
+// CeVector - Р’РµРєС‚РѕСЂ
 //************************************************
 struct DLLIMPEXP CeVector {
   double x, y, z;
@@ -53,33 +53,33 @@ struct DLLIMPEXP CeVector {
   CeVector(double xx, double yy, double zz) : x(xx), y(yy), z(zz){ }
   CeVector(const CePoint& pt1, const CePoint& pt2) : x(pt2.x-pt1.x), y(pt2.y-pt1.y), z(pt2.z-pt1.z){ } // Dif
   
-  double length() const; // Длина вектора
+  double length() const; // Р”Р»РёРЅР° РІРµРєС‚РѕСЂР°
   
-  void setPolar2D(double XYAngle, double length); // Иниц. плоского вектора
+  void setPolar2D(double XYAngle, double length); // РРЅРёС†. РїР»РѕСЃРєРѕРіРѕ РІРµРєС‚РѕСЂР°
   
   CeVector operator * (double scale) const { return CeVector (x * scale, y * scale, z * scale); }
   CeVector& operator *= (double scale) { x*=scale;  y*=scale;  z*=scale;  return *this; }
 };
 
 //************************************************
-// CeCurve - Кривая
+// CeCurve - РљСЂРёРІР°СЏ
 //************************************************
 class DLLIMPEXP CeCurve {
   public:
-    virtual ~CeCurve() { }; // Без виртуального деструктора, память производных объектов освоб-ся не будет! Перегрузка не обязательна.
+    virtual ~CeCurve() { }; // Р‘РµР· РІРёСЂС‚СѓР°Р»СЊРЅРѕРіРѕ РґРµСЃС‚СЂСѓРєС‚РѕСЂР°, РїР°РјСЏС‚СЊ РїСЂРѕРёР·РІРѕРґРЅС‹С… РѕР±СЉРµРєС‚РѕРІ РѕСЃРІРѕР±-СЃСЏ РЅРµ Р±СѓРґРµС‚! РџРµСЂРµРіСЂСѓР·РєР° РЅРµ РѕР±СЏР·Р°С‚РµР»СЊРЅР°.
 
-    virtual CePoint pointAt(double param) const=0;   // Точка на кривой
-    virtual CeVector firstDeriv(double param) const; // 1-я производная (касательная). Длина вектора равна радиусу кривизны
+    virtual CePoint pointAt(double param) const=0;   // РўРѕС‡РєР° РЅР° РєСЂРёРІРѕР№
+    virtual CeVector firstDeriv(double param) const; // 1-СЏ РїСЂРѕРёР·РІРѕРґРЅР°СЏ (РєР°СЃР°С‚РµР»СЊРЅР°СЏ). Р”Р»РёРЅР° РІРµРєС‚РѕСЂР° СЂР°РІРЅР° СЂР°РґРёСѓСЃСѓ РєСЂРёРІРёР·РЅС‹
     
     virtual double startParam() const { return 0.; }
     virtual double endParam() const;
     
     virtual void print() const;
-    virtual bool valid() const=0; // Проверка корректности
+    virtual bool valid() const=0; // РџСЂРѕРІРµСЂРєР° РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚Рё
 };
 
 //************************************************
-// CeCircle - Окружность
+// CeCircle - РћРєСЂСѓР¶РЅРѕСЃС‚СЊ
 //************************************************
 class DLLIMPEXP CeCircle : public CeCurve {
     CePoint cen;
@@ -100,7 +100,7 @@ class DLLIMPEXP CeCircle : public CeCurve {
 
 
 //************************************************
-// CeEllipse - Эллипс
+// CeEllipse - Р­Р»Р»РёРїСЃ
 //************************************************
 class DLLIMPEXP CeEllipse : public CeCurve {
     CePoint cen;
@@ -116,12 +116,12 @@ class DLLIMPEXP CeEllipse : public CeCurve {
 
 
 //************************************************
-// CeHelix - Спираль
+// CeHelix - РЎРїРёСЂР°Р»СЊ
 //************************************************
 class DLLIMPEXP CeHelix : public CeCurve {
     CePoint cen;
     double rad, step;
-    // static const int coil=2; // Число витков
+    // static const int coil=2; // Р§РёСЃР»Рѕ РІРёС‚РєРѕРІ
 
   public:
     CeHelix(double xx, double yy, double Rad, double Step) : cen(xx,yy), rad(Rad), step(Step) { }

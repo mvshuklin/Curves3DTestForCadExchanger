@@ -1,18 +1,18 @@
 //************************************************
 //************************************************
-// Решение тестовой задачи от CAD Exchanger
-//            Библиотека кривых
+// Р РµС€РµРЅРёРµ С‚РµСЃС‚РѕРІРѕР№ Р·Р°РґР°С‡Рё РѕС‚ CAD Exchanger
+//            Р‘РёР±Р»РёРѕС‚РµРєР° РєСЂРёРІС‹С…
 //               CECurve.cpp
 //************************************************
 //************************************************
-//             СОДЕРЖАНИЕ:
-// Утилиты
-// CePoint - Точка
-// CeVector - Вектор
-// CeCurve - Кривая
-// CeCircle - Окружность
-// CeEllipse - Эллипс
-// CeHelix - Спираль
+//             РЎРћР”Р•Р Р–РђРќРР•:
+// РЈС‚РёР»РёС‚С‹
+// CePoint - РўРѕС‡РєР°
+// CeVector - Р’РµРєС‚РѕСЂ
+// CeCurve - РљСЂРёРІР°СЏ
+// CeCircle - РћРєСЂСѓР¶РЅРѕСЃС‚СЊ
+// CeEllipse - Р­Р»Р»РёРїСЃ
+// CeHelix - РЎРїРёСЂР°Р»СЊ
 //************************************************
 //************************************************
 #include <stdio.h>
@@ -20,7 +20,7 @@
 #include "CECurve.h"
 
 const double PI = 3.14159265358979323846;
-const double EPS = 1E-7; // Минимальная дистанция
+const double EPS = 1E-7; // РњРёРЅРёРјР°Р»СЊРЅР°СЏ РґРёСЃС‚Р°РЅС†РёСЏ
 const double CeEpsAng = 3.E-4;
 const double CeEpsValid = EPS*1000.;
 const double CeMaxSize = 1E9;
@@ -28,7 +28,7 @@ const double CeMaxSize = 1E9;
 using namespace CadExchangerTestSpace;
 
 //************************************************
-// Утилиты
+// РЈС‚РёР»РёС‚С‹
 //************************************************
 void printCommon(const CeCurve* pCurve, const char* Name, const CePoint& cen) {
   if(pCurve==nullptr) return;
@@ -40,9 +40,9 @@ void printCommon(const CeCurve* pCurve, const char* Name, const CePoint& cen) {
 
 
 //************************************************
-// CePoint - Точка
+// CePoint - РўРѕС‡РєР°
 //************************************************
-// Расстояние между точками
+// Р Р°СЃСЃС‚РѕСЏРЅРёРµ РјРµР¶РґСѓ С‚РѕС‡РєР°РјРё
 double CePoint::distTo(const CePoint& other) const {
   double dx=x-other.x, dy=y-other.y, dz=z-other.z;
   return sqrt(dx*dx+dy*dy+dz*dz);
@@ -50,14 +50,14 @@ double CePoint::distTo(const CePoint& other) const {
 
 
 //************************************************
-// CeVector - Вектор
+// CeVector - Р’РµРєС‚РѕСЂ
 //************************************************
-// Длина вектора
+// Р”Р»РёРЅР° РІРµРєС‚РѕСЂР°
 double CeVector::length() const {
   return sqrt(x*x+y*y+z*z);
 }
 
-// Иниц. плоского вектора
+// РРЅРёС†. РїР»РѕСЃРєРѕРіРѕ РІРµРєС‚РѕСЂР°
 void CeVector::setPolar2D(double XYAngle, double length) {
   x=length*cos(XYAngle);
   y=length*sin(XYAngle);
@@ -66,16 +66,16 @@ void CeVector::setPolar2D(double XYAngle, double length) {
 
 
 //************************************************
-// CeCurve - Кривая
+// CeCurve - РљСЂРёРІР°СЏ
 //************************************************
-  // 1-я производная (касательная). Длина вектора равна радиусу кривизны
+  // 1-СЏ РїСЂРѕРёР·РІРѕРґРЅР°СЏ (РєР°СЃР°С‚РµР»СЊРЅР°СЏ). Р”Р»РёРЅР° РІРµРєС‚РѕСЂР° СЂР°РІРЅР° СЂР°РґРёСѓСЃСѓ РєСЂРёРІРёР·РЅС‹
 CeVector CeCurve::firstDeriv(double param) const {
   double eps=EPS, epsA=CeEpsAng;
   CePoint prev=pointAt(param-epsA),  pt=pointAt(param), next=pointAt(param+epsA), mid(prev, next);
   CeVector deriv(prev, next);
-  double h=pt.distTo(mid);   // Прогиб
-  double L=deriv.length();   // Хорда
-  double curRad= h>eps/10000. ? L*L/(8.*h) : CeMaxSize;  // Радиус кривизны
+  double h=pt.distTo(mid);   // РџСЂРѕРіРёР±
+  double L=deriv.length();   // РҐРѕСЂРґР°
+  double curRad= h>eps/10000. ? L*L/(8.*h) : CeMaxSize;  // Р Р°РґРёСѓСЃ РєСЂРёРІРёР·РЅС‹
   double factor= L>eps ? curRad / L : CeMaxSize;
   deriv *= factor;  return deriv;
 }
@@ -89,7 +89,7 @@ void CeCurve::print() const {
 }
 
 //************************************************
-// CeCircle - Окружность
+// CeCircle - РћРєСЂСѓР¶РЅРѕСЃС‚СЊ
 //************************************************
 CePoint CeCircle::pointAt(double param) const {
   return CePoint(cen.x + rad*cos(param), cen.y + rad*sin(param));
@@ -104,7 +104,7 @@ bool CeCircle:: valid() const { return rad>CeEpsValid; }
 
 
 //************************************************
-// CeEllipse - Эллипс
+// CeEllipse - Р­Р»Р»РёРїСЃ
 //************************************************
 CePoint CeEllipse::pointAt(double param) const {
   return CePoint(cen.x + radX*cos(param), cen.y + radY*sin(param));
@@ -114,9 +114,9 @@ bool CeEllipse::valid() const { return radX>CeEpsValid && radY>CeEpsValid; }
 
 
 //************************************************
-// CeHelix - Спираль
+// CeHelix - РЎРїРёСЂР°Р»СЊ
 //************************************************
-const int CeHelixCoil=2; // Число витков
+const int CeHelixCoil=2; // Р§РёСЃР»Рѕ РІРёС‚РєРѕРІ
 
 CePoint CeHelix::pointAt(double param) const {
   return CePoint(cen.x + rad*cos(param), cen.y + rad*sin(param), param * step/(2.*PI));
