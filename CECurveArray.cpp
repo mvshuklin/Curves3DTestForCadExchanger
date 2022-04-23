@@ -1,7 +1,7 @@
 //************************************************
 //************************************************
-// Решение тестовой задачи от CAD Exchanger
-//            Набор кривых
+// Р РµС€РµРЅРёРµ С‚РµСЃС‚РѕРІРѕР№ Р·Р°РґР°С‡Рё РѕС‚ CAD Exchanger
+//            РќР°Р±РѕСЂ РєСЂРёРІС‹С…
 //           CECurveArray.cpp
 //************************************************
 //************************************************
@@ -13,9 +13,9 @@
 namespace CadExchangerTestSpace {
 
 //************************************************
-// Утилиты
+// РЈС‚РёР»РёС‚С‹
 //************************************************
-// Случайное число в диапазоне
+// РЎР»СѓС‡Р°Р№РЅРѕРµ С‡РёСЃР»Рѕ РІ РґРёР°РїР°Р·РѕРЅРµ
 int randRange(int start=1, int end=100) {
   if(end-start<1 || start<0) { printf("\nError range!"); return 0; }
   int rnd=rand() % (end-start+1) + start;
@@ -23,23 +23,23 @@ int randRange(int start=1, int end=100) {
 }
 
 //************************************************
-// Набор кривых
+// РќР°Р±РѕСЂ РєСЂРёРІС‹С…
 //************************************************
-// Добавить кривую
+// Р”РѕР±Р°РІРёС‚СЊ РєСЂРёРІСѓСЋ
 bool CeCurveArray::add(CeCurve *pCurve, double cRad) {
   if(pCurve==nullptr) { printf("\nMemory error!");  return false; }
-  CeSmartCurvePointer curvePtr(pCurve, cRad); // Создаём заранее для автоосвоб. памяти при ошибке
+  CeSmartCurvePointer curvePtr(pCurve, cRad); // РЎРѕР·РґР°С‘Рј Р·Р°СЂР°РЅРµРµ РґР»СЏ Р°РІС‚РѕРѕСЃРІРѕР±. РїР°РјСЏС‚Рё РїСЂРё РѕС€РёР±РєРµ
   if(!pCurve->valid()) { printf("\nCurve no valid! ");  pCurve->print(); return false; }
   curveVec.push_back(curvePtr);
   return true;
 }
-// Добавить кривую
+// Р”РѕР±Р°РІРёС‚СЊ РєСЂРёРІСѓСЋ
 bool CeCurveArray::add(const CeSmartCurvePointer& scp) {
   curveVec.push_back(scp);
   return true;
 }
 
-// Заполнить случайными кривыми
+// Р—Р°РїРѕР»РЅРёС‚СЊ СЃР»СѓС‡Р°Р№РЅС‹РјРё РєСЂРёРІС‹РјРё
 bool CeCurveArray::randomPolulate(int count) {
   curveVec.clear();
 
@@ -66,7 +66,7 @@ bool CeCurveArray::randomPolulate(int count) {
   return true;
 }
 
-// Вывод списка кривых
+// Р’С‹РІРѕРґ СЃРїРёСЃРєР° РєСЂРёРІС‹С…
 void CeCurveArray::printArray(const char* header) const {
   if (header) printf("\n\n  %s", header);
   for (int i = 0; i < size(); i++) {
@@ -75,26 +75,26 @@ void CeCurveArray::printArray(const char* header) const {
   }
 }
 
-// Сортировка по возрастанию радиуса
+// РЎРѕСЂС‚РёСЂРѕРІРєР° РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ СЂР°РґРёСѓСЃР°
 void CeCurveArray::sortRad() {
   std::sort(curveVec.begin(), curveVec.end());
 }
 
-// Суммирование радиусов
+// РЎСѓРјРјРёСЂРѕРІР°РЅРёРµ СЂР°РґРёСѓСЃРѕРІ
 double CeCurveArray::sumRad() const {
-  const int minMultiThreadSize = 1000; // При малом размере массива, затраты на создание потоков превышают выигрыш от многопоточности.
-                                       // Значение minMultiThreadSize выбрано по результатам тестирования быстродействия (8-ядерный процессор).
+  const int minMultiThreadSize = 1000; // РџСЂРё РјР°Р»РѕРј СЂР°Р·РјРµСЂРµ РјР°СЃСЃРёРІР°, Р·Р°С‚СЂР°С‚С‹ РЅР° СЃРѕР·РґР°РЅРёРµ РїРѕС‚РѕРєРѕРІ РїСЂРµРІС‹С€Р°СЋС‚ РІС‹РёРіСЂС‹С€ РѕС‚ РјРЅРѕРіРѕРїРѕС‚РѕС‡РЅРѕСЃС‚Рё.
+                                       // Р—РЅР°С‡РµРЅРёРµ minMultiThreadSize РІС‹Р±СЂР°РЅРѕ РїРѕ СЂРµР·СѓР»СЊС‚Р°С‚Р°Рј С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ Р±С‹СЃС‚СЂРѕРґРµР№СЃС‚РІРёСЏ (8-СЏРґРµСЂРЅС‹Р№ РїСЂРѕС†РµСЃСЃРѕСЂ).
   return size() < minMultiThreadSize ? sumRadSingleThread() : sumRadMultiThread();
 }
 
-// Суммирование радиусов без поддержки многопоточности
+// РЎСѓРјРјРёСЂРѕРІР°РЅРёРµ СЂР°РґРёСѓСЃРѕРІ Р±РµР· РїРѕРґРґРµСЂР¶РєРё РјРЅРѕРіРѕРїРѕС‚РѕС‡РЅРѕСЃС‚Рё
 double CeCurveArray::sumRadSingleThread() const {
   double sum = 0.;
   for (int i = size() - 1; i >= 0; i--) sum += curveVec[i].cirRad;
   return sum;
 }
 
-// Суммирование радиусов c поддержкой многопоточности
+// РЎСѓРјРјРёСЂРѕРІР°РЅРёРµ СЂР°РґРёСѓСЃРѕРІ c РїРѕРґРґРµСЂР¶РєРѕР№ РјРЅРѕРіРѕРїРѕС‚РѕС‡РЅРѕСЃС‚Рё
 double CeCurveArray::sumRadMultiThread() const {
   double sum = 0.;  int sz = size();
 #pragma omp parallel for reduction(+:sum)
